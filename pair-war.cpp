@@ -23,6 +23,8 @@ int winner; // Variable to hold if there is a winner and which player won
 
 void *player_Thread(void* player);
 
+sem_t dealerSemaphore;
+
 // create players
 playerThread player1;
 playerThread player2;
