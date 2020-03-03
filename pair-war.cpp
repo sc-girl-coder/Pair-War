@@ -21,6 +21,8 @@ int deckSize; // Variable to hold how many cards are currently in the deck
 
 int winner; // Variable to hold if there is a winner and which player won
 
+void *player_Thread(void* player);
+
 // create players
 playerThread player1;
 playerThread player2;
@@ -48,6 +50,24 @@ void printDeck(){
     for(int i = 0; i < deckSize; i++)
         cout << deck[i] << " ";
 
+}
+
+void *dealer_thread(void *args){
+shuffleDeck();
+
+deckSize = 52;
+winner = -1;
+
+printDeck();
+player1.card1 = getCard();
+player2.card1 = getCard();
+player3.card1 = getCard();
+
+sem_post(&dealerSemaphore);
+sem_post(&dealerSemaphore);
+sem_post(&dealerSemaphore);
+
+return (void*)NULL;
 }
 
 void *player_Thread(void* player) {
@@ -88,7 +108,7 @@ printDeck();
 return (void *) NULL;
 }
 
-void *player_Thread(void* player);
+
 
 int main(int argc, char* argv[])
 {
